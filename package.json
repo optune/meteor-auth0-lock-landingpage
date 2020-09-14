@@ -1,0 +1,32 @@
+{
+  "name": "meteor-auth0-lock-landingpage",
+  "version": "0.1.0",
+  "description": "Auth0 lock widget for onescreener landing page.",
+  "main": "lib/index.js",
+  "files": [
+      "lib/index.js"      
+  ],
+  "scripts": {
+    "test": "test",
+    "lint": "npx prettier --write src",
+    "start": "parcel src/index.html -p 3010",
+    "sandbox": "rm -r -f sandbox && NODE_ENV=sandbox parcel watch src/index.js -d sandbox --target browser --no-source-maps",
+    "build": "rm -r -f lib && parcel build src/index.js -d lib --target browser --no-source-maps"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/optune/meteor-auth0-lock-landingpage.git"
+  },
+  "keywords": ["onescreener", "auth0", "lock"],
+  "author": "Joël Meiller",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/optune/meteor-auth0-lock-landingpage/issues"
+  },
+  "homepage": "https://github.com/optune/meteor-auth0-lock-landingpage#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "prettier": "^2.1.1"
+  }
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Landing page test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <script src="https://cdn.auth0.com/js/lock/11.20/lock.min.js"></script>
+    <!-- <script type="text/javascript" src="https://d2cu5zba7j2d0m.cloudfront.net/meteor-auth0-lock/1.0.1/onescreener-lock.min.js"></script>-->
+    <script type="text/javascript" src="index.js"></script>
+  </head>
+
+  <body>
+    <button onclick="showLogin()">Log in</button>
+    <button onclick="showSignup()">Sign up</button>
+    <button onclick="closeLock()">Close</button>
+
+    <div id="lock-container"><br /></div>
+
+    <script type="text/javascript">
+      var containerId = 'lock-container'
+
+      var showLogin = function () {
+        Auth0.showLock({ type: 'login', containerId })
+      }
+
+      var showSignup = function () {
+        Auth0.showLock({ type: 'signup', containerId })
+      }
+
+      var closeLock = function () {
+        console.log('Close lock')
+        Auth0.closeLock({ containerId })
+      }
+    </script>
+  </body>
+</html>
