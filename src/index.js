@@ -13,13 +13,13 @@ const LoginUrl = process.env.LOGIN_URL
 const defaultLanguageDictionary = {
   title: 'Log in',
   signUpTitle: 'Get started for free',
-  signupTerms:
+  signUpTerms:
     'By signing up, you agree to our <a href="https://www.optune.me/general-term-of-service" target="_blank">general terms of service</a> and <a href="https://www.optune.me/privacy-policy-optune" target="_blank">privacy policy</a>.'
 }
 
 const defaultTheme = {
   logo:
-    'https://res.cloudinary.com/optune-me/image/upload/c_pad,h_58,w_200/v1558014130/onescreener-v2/app/logo-onescreener.png',
+    'https://res.cloudinary.com/optune-me/image/upload/c_pad,h_58,w_200/v1598618825/onescreener-v2/app/onescreener-logo-new.png',
   primaryColor: '#27E200'
 }
 
@@ -33,6 +33,8 @@ Auth0._getCookie = ({ migrationData }) => {
   const cookie = `${KEY_NAME}=${encodeURIComponent(JSON.stringify(migrationData))}; domain=${
     process.env.COOKIE_ORIGIN
   }; max-age=${5 * 60}; path=/;`
+
+  console.log('COOKIE', cookie)
 
   return cookie
 }
@@ -68,8 +70,6 @@ Auth0._stateParam = (credentialToken, redirectUrl) => {
     credentialToken,
     isCordova: false
   }
-
-  console.log(state)
 
   state.redirectUrl = redirectUrl || '' + window.location
 
@@ -113,7 +113,7 @@ Auth0.showLock = (options = { type: 'login' }) => {
     languageDictionary,
     theme,
     closable: true,
-    container: options.containerId,
+    container: !options.isMobile && options.containerId,
     allowLogin: isLogin,
     allowSignUp: isSignup
   }

@@ -21,11 +21,11 @@
       var containerId = 'lock-container'
 
       var showLogin = function () {
-        Auth0.showLock({ type: 'login', containerId })
+        Auth0.showLock({ type: 'login', containerId, isMobile: window.innerWidth <= 768 })
       }
 
       var showSignup = function () {
-        Auth0.showLock({ type: 'signup', containerId })
+        Auth0.showLock({ type: 'signup', containerId, isMobile: window.innerWidth <= 768 })
       }
 
       var closeLock = function () {
