@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
     <script src="https://cdn.auth0.com/js/lock/11.20/lock.min.js"></script>
-    <!-- <script type="text/javascript" src="https://d2cu5zba7j2d0m.cloudfront.net/meteor-auth0-lock/1.0.1/onescreener-lock.min.js"></script>-->
-    <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="https://d2cu5zba7j2d0m.cloudfront.net/meteor-auth0-lock/1.0.1/onescreener-lock.min.js"></script>
+    <!-- <script type="text/javascript" src="index.js"></script> -->
   </head>
 
   <body>
@@ -29,9 +29,10 @@
       }
 
       var closeLock = function () {
-        console.log('Close lock')
         Auth0.closeLock({ containerId })
       }
+
+      showSignup()
     </script>
   </body>
 </html>

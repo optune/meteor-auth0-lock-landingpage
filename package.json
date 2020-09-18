@@ -10,7 +10,8 @@
     "test": "test",
     "lint": "npx prettier --write src",
     "start": "parcel src/index.html -p 3010",
-    "sandbox": "rm -r -f sandbox && NODE_ENV=sandbox parcel watch src/index.js -d sandbox --target browser --no-source-maps",
+    "start:sandbox": "NODE_ENV=sandbox parcel src/index.html -p 3010",
+    "sandbox": "rm -r -f sandbox && NODE_ENV=sandbox parcel build src/index.js -d sandbox --target browser --no-source-maps",
     "build": "rm -r -f lib && parcel build src/index.js -d lib --target browser --no-source-maps"
   },
   "repository": {

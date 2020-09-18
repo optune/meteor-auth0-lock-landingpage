@@ -3,16 +3,24 @@ import { Base64 } from './utils/Base64'
 
 Auth0 = {}
 
-let auht0Lock
+let auth0Lock
 
 const Auth0ClientId = process.env.AUTH0_CLIENT_ID
 const Auth0Domain = process.env.AUTH0_DOMAIN
 const LoginUrl = process.env.LOGIN_URL
 
-const theme = {
+// Lock settings
+const defaultLanguageDictionary = {
+  title: 'Log in',
+  signUpTitle: 'Get started for free',
+  signupTerms:
+    'By signing up, you agree to our <a href="https://www.optune.me/general-term-of-service" target="_blank">general terms of service</a> and <a href="https://www.optune.me/privacy-policy-optune" target="_blank">privacy policy</a>.'
+}
+
+const defaultTheme = {
   logo:
     'https://res.cloudinary.com/optune-me/image/upload/c_pad,h_58,w_200/v1558014130/onescreener-v2/app/logo-onescreener.png',
-  primaryColor: '#27E200',
+  primaryColor: '#27E200'
 }
 
 // Source: https://github.com/meteor/meteor/blob/master/packages/reload/reload.js
@@ -35,11 +43,14 @@ Auth0._saveDataForRedirect = ({ credentialToken }) => {
   var migrationData = {
     oauth: {
       loginService: 'auth0',
-      credentialToken,
-    },
+      credentialToken
+    }
   }
 
   try {
+    // Delete previous cookies
+    document.cookie = KEY_NAME + '=; max-age=0'
+    // Set new cookie
     document.cookie = Auth0._getCookie({ migrationData })
   } catch (err) {
     // We should have already checked this, but just log - don't throw
@@ -55,7 +66,7 @@ Auth0._stateParam = (credentialToken, redirectUrl) => {
   const state = {
     loginStyle: 'redirect',
     credentialToken,
-    isCordova: false,
+    isCordova: false
   }
 
   console.log(state)
@@ -72,6 +83,10 @@ Auth0._stateParam = (credentialToken, redirectUrl) => {
 // @params loginUrl: Login base url
 // @params containerId: Id of the html element the lock widget shall be shown inline. If not set a overlay will be shown
 Auth0.showLock = (options = { type: 'login' }) => {
+  // Close existing lock
+  Auth0.closeLock(options)
+
+  // Get credential token and redirect url
   const credentialToken = Random.secret()
   Auth0._saveDataForRedirect({ credentialToken })
 
@@ -83,18 +98,15 @@ Auth0.showLock = (options = { type: 'login' }) => {
     redirectUrl = `${redirectUrl}#${options.type}`
   }
 
-  const languageDictionary = {
-    title: isLogin && 'Log in',
-    signUpTitle: 'Get started for free',
-  }
-
+  const languageDictionary = options.languageDictionary || defaultLanguageDictionary
+  const theme = options.theme || defaultTheme
   // Combine lock options
   const lockOptions = {
     auth: {
       redirectUrl,
       params: {
-        state: Auth0._stateParam(credentialToken, `${LoginUrl}/`),
-      },
+        state: Auth0._stateParam(credentialToken, `${LoginUrl}/`)
+      }
     },
     allowedConnections: (isSignup && ['Username-Password-Authentication']) || null,
     rememberLastLogin: true,
@@ -103,18 +115,18 @@ Auth0.showLock = (options = { type: 'login' }) => {
     closable: true,
     container: options.containerId,
     allowLogin: isLogin,
-    allowSignUp: isSignup,
+    allowSignUp: isSignup
   }
 
   // Initialize lock
-  auht0Lock = new Auth0Lock(Auth0ClientId, Auth0Domain, lockOptions)
+  auth0Lock = new Auth0Lock(Auth0ClientId, Auth0Domain, lockOptions)
 
   // Show lock
-  auht0Lock.show()
+  auth0Lock.show()
 }
 
 Auth0.closeLock = (options = {}) => {
-  auht0Lock = null
+  auth0Lock = null
 
   if (options.containerId) {
     // Get the container element
