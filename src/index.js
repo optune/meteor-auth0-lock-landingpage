@@ -34,8 +34,6 @@ Auth0._getCookie = ({ migrationData }) => {
     process.env.COOKIE_ORIGIN
   }; max-age=${5 * 60}; path=/;`
 
-  console.log('COOKIE', cookie)
-
   return cookie
 }
 
@@ -102,6 +100,7 @@ Auth0.showLock = (options = { type: 'login' }) => {
   const theme = options.theme || defaultTheme
   // Combine lock options
   const lockOptions = {
+    configurationBaseUrl: 'https://cdn.eu.auth0.com/',
     auth: {
       redirectUrl,
       params: {
